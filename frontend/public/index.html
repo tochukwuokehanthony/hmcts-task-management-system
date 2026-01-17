@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMCTS Task Manager</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>HMCTS Task Manager</h1>
+            <p>Caseworker Task Management System</p>
+        </header>
+
+        <div id="error-container"></div>
+        <div id="success-container"></div>
+
+        <!-- Task Form -->
+        <section class="task-form-section">
+            <h2 id="form-title">Create New Task</h2>
+            <form id="task-form">
+                <input type="hidden" id="task-id" value="">
+
+                <div class="form-group">
+                    <label for="title">Title <span class="required">*</span></label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status <span class="required">*</span></label>
+                    <select id="status" name="status" required>
+                        <option value="TODO">To Do</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="COMPLETED">Completed</option>
+                        <option value="CANCELLED">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDateTime">Due Date & Time <span class="required">*</span></label>
+                    <input type="datetime-local" id="dueDateTime" name="dueDateTime" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submit-btn">Create Task</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn" style="display: none;">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Task List -->
+        <section class="task-list-section">
+            <h2>Tasks <span id="task-count">(0)</span></h2>
+            <div id="loading" class="loading" style="display: none;">Loading tasks...</div>
+            <div id="task-list"></div>
+        </section>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
