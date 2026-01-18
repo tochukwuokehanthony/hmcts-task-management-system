@@ -1,85 +1,109 @@
-# HMCTS Task Manager
+# HMCTS DTS Developer Challenge – Task Management Service
 
-A full-stack task management system for HMCTS caseworkers, built with Java Spring Boot and Node.js with minimal HTML.
+A lightweight task management backend with an optional minimal frontend, implemented to meet the HMCTS DTS Developer Challenge requirements.
 
 ## Project Overview
 
-This application allows caseworkers to efficiently manage their tasks with full CRUD operations, status tracking, and due date management.
+This application provides core task management functionality, allowing users to create, retrieve, update, and delete tasks with status tracking and due date management.
+The solution is intentionally simple and production-oriented, focusing on correctness, maintainability, testing, and clear API design.
+
+## Challenge Confirmation
+
+I confirm that I have completed the HMCTS Case Management Coding Challenge and that this repository contains my submitted solution.
 
 ## Technologies
 
 ### Backend
+
 - Java 17
 - Spring Boot 3.2.1
 - Spring Data JPA
-- H2 Database (development) / PostgreSQL (production)
+- H2 (development) / PostgreSQL (production-ready)
 - Gradle
 - JUnit 5 & Mockito
-- OpenAPI/Swagger
+- OpenAPI / Swagger
 
-### Frontend
+### Frontend (Optional)
+
 - Node.js
 - Express.js
 - Vanilla JavaScript
 - HTML5 & CSS3
-- Jest (testing)
+- Jest
 
-## Features
+## Requirements Coverage
 
-- Create tasks with title, description, status, and due date
-- View all tasks in a user-friendly interface
-- Update tasks and change their status
-- Delete tasks with confirmation
-- Full validation and error handling
-- Comprehensive unit tests (backend and frontend)
-- API documentation with Swagger
-- Responsive design
-- Minimal HTML with no heavy frameworks
+### Backend API
+
+The backend fulfils all required capabilities:
+
+- **Create a task** with:
+  - Title
+  - Description (optional)
+  - Status
+  - Due date/time
+- **Retrieve a task by ID**
+- **Retrieve all tasks**
+- **Update the status of a task**
+- **Delete a task**
+
+Data is persisted using a relational database and exposed via RESTful endpoints with validation and structured error handling.
+
+### Frontend Application
+
+The frontend supports all required functionality:
+
+- Create tasks
+- View existing tasks
+- Update tasks and task status
+- Delete tasks
+
+The frontend is deliberately minimal and exists primarily to demonstrate end-to-end interaction with the API. The primary assessment focus is the backend service.
+
+## Technical Requirements
+
+This solution meets all technical requirements specified in the challenge:
+
+- **Backend:** Implemented using Java and Spring Boot
+- **Frontend:** Implemented using Node.js and minimal HTML/JavaScript
+- **Unit testing:**
+  - Backend: JUnit 5 and Mockito
+  - Frontend: Jest and Supertest
+- **Database storage:** Relational database via JPA
+- **Validation and error handling:**
+  - Bean Validation on request DTOs
+  - Centralised exception handling
+- **API documentation:**
+  - OpenAPI/Swagger available at runtime
 
 ## Project Structure
 
 ```
 hmcts-task-manager/
-├── backend/                 # Spring Boot API
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/uk/gov/hmcts/taskmanager/
-│   │   │   │   ├── controller/     # REST endpoints
-│   │   │   │   ├── dto/            # Request/Response objects
-│   │   │   │   ├── exception/      # Error handling
-│   │   │   │   ├── model/          # JPA entities
-│   │   │   │   ├── repository/     # Data access
-│   │   │   │   └── service/        # Business logic
-│   │   │   └── resources/
-│   │   │       └── application.properties
-│   │   └── test/
-│   │       └── java/uk/gov/hmcts/taskmanager/
-│   ├── build.gradle
-│   ├── settings.gradle
-│   └── README.md
-│
-└── frontend/                # Node.js + HTML application
-    ├── public/              # Static files
-    │   ├── index.html      # Main page
-    │   ├── styles.css      # Styling
-    │   └── app.js          # Client-side JS
-    ├── src/
-    │   ├── server.js       # Express server
-    │   └── server.test.js  # Tests
-    ├── package.json
-    └── README.md
+├── backend/
+│   ├── src/main/java/uk/gov/hmcts/taskmanager/
+│   │   ├── controller/
+│   │   ├── dto/
+│   │   ├── exception/
+│   │   ├── model/
+│   │   ├── repository/
+│   │   └── service/
+│   └── src/test/java/uk/gov/hmcts/taskmanager/
+└── frontend/
+    ├── public/
+    └── src/
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Java 17 or higher
-- Node.js 16 or higher
-- Gradle (or use included wrapper)
+- Java 17+
+- Node.js 16+
+- Gradle (or wrapper)
 - npm
 
-### Backend Setup
+### Backend
 
 ```bash
 cd backend
@@ -87,11 +111,13 @@ cd backend
 ./gradlew bootRun
 ```
 
-The API will be available at `http://localhost:8080`
+**API available at:**
+http://localhost:8080
 
-**API Documentation**: http://localhost:8080/swagger-ui.html
+**Swagger UI:**
+http://localhost:8080/swagger-ui.html
 
-### Frontend Setup
+### Frontend
 
 ```bash
 cd frontend
@@ -99,21 +125,20 @@ npm install
 npm start
 ```
 
-The application will be available at `http://localhost:3000`
+**Frontend available at:**
+http://localhost:3000
 
 ## Running Tests
 
-### Backend Tests
+### Backend
 
 ```bash
-cd backend
 ./gradlew test
 ```
 
-### Frontend Tests
+### Frontend
 
 ```bash
-cd frontend
 npm test
 ```
 
@@ -121,177 +146,38 @@ npm test
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | /api/tasks | Create a new task |
-| GET | /api/tasks | Get all tasks |
-| GET | /api/tasks/{id} | Get task by ID |
-| PUT | /api/tasks/{id} | Update a task |
+| POST | /api/tasks | Create task |
+| GET | /api/tasks | Retrieve all tasks |
+| GET | /api/tasks/{id} | Retrieve task by ID |
 | PATCH | /api/tasks/{id}/status | Update task status |
-| DELETE | /api/tasks/{id} | Delete a task |
+| DELETE | /api/tasks/{id} | Delete task |
 
 ## Task Status Values
 
-- `TODO` - Task not started
-- `IN_PROGRESS` - Task in progress
-- `COMPLETED` - Task completed
-- `CANCELLED` - Task cancelled
+- `TODO`
+- `IN_PROGRESS`
+- `COMPLETED`
+- `CANCELLED`
 
-## Example API Usage
+## Key Implementation Decisions
 
-### Create a Task
+- Gradle chosen to align with HMCTS conventions
+- DTO pattern used to separate API contracts from persistence models
+- Minimal frontend included only to demonstrate API interaction
+- Validation and error handling implemented centrally
+- Database abstraction allows easy migration from H2 to PostgreSQL
+- Vanilla JavaScript used to avoid unnecessary framework complexity
 
-```bash
-curl -X POST http://localhost:8080/api/tasks \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Review case documents",
-    "description": "Review all documents for case #12345",
-    "status": "TODO",
-    "dueDateTime": "2026-02-01T14:00:00"
-  }'
-```
+## Assumptions
 
-### Get All Tasks
+- Tasks are managed independently and do not require authentication for the scope of this challenge
+- Status updates are performed as a discrete operation
+- Due date/time is optional unless specified by business rules
 
-```bash
-curl http://localhost:8080/api/tasks
-```
+## Future Enhancements (Out of Scope)
 
-### Update Task Status
-
-```bash
-curl -X PATCH http://localhost:8080/api/tasks/1/status \
-  -H "Content-Type: application/json" \
-  -d '{"status": "COMPLETED"}'
-```
-
-### Delete a Task
-
-```bash
-curl -X DELETE http://localhost:8080/api/tasks/1
-```
-
-## Database Configuration
-
-The application uses H2 in-memory database for development. For production deployment, configure PostgreSQL in `application-prod.properties`.
-
-**H2 Console**: http://localhost:8080/h2-console
-- JDBC URL: `jdbc:h2:mem:taskdb`
-- Username: `sa`
-- Password: (empty)
-
-## Building for Production
-
-### Backend
-
-```bash
-cd backend
-./gradlew clean build
-java -jar build/libs/task-manager-1.0.0.jar
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install --production
-PORT=80 npm start
-```
-
-## Key Implementation Details
-
-### Backend
-
-- **Validation**: Jakarta Bean Validation annotations on DTOs
-- **Error Handling**: Global exception handler with structured error responses
-- **Testing**: JUnit 5 + Mockito for controller and service layers
-- **Documentation**: OpenAPI/Swagger auto-generated from annotations
-- **Database**: JPA repositories with automatic timestamps
-
-### Frontend
-
-- **Architecture**: Express server proxies API calls to avoid CORS
-- **Client-Side**: Vanilla JavaScript with no heavy frameworks
-- **Styling**: Custom CSS following HMCTS design patterns
-- **Testing**: Jest + Supertest for server endpoint testing
-- **Security**: HTML escaping to prevent XSS attacks
-
-## Design Decisions
-
-1. **Gradle over Maven**: Following HMCTS starter repo convention
-2. **Node.js + HTML**: Minimal frontend as specified, no React/Angular
-3. **API Proxy**: Express server handles CORS and provides clean separation
-4. **H2 Database**: Simple development setup, production-ready PostgreSQL support
-5. **DTO Pattern**: Separates API contracts from database entities
-6. **Vanilla JS**: No framework overhead, fast page loads, easy to understand
-7. **HMCTS Styling**: Government Digital Service inspired design
-
-## Features Checklist
-
-### Backend Requirements ✅
-- [x] Create task with title, description (optional), status, due date/time
-- [x] Retrieve task by ID
-- [x] Retrieve all tasks
-- [x] Update task status
-- [x] Delete task
-- [x] Unit tests
-- [x] Database storage (H2/PostgreSQL)
-- [x] Validation and error handling
-- [x] API documentation
-
-### Frontend Requirements ✅
-- [x] Create tasks
-- [x] View tasks
-- [x] Update tasks
-- [x] Delete tasks
-- [x] User-friendly interface
-- [x] Node.js implementation
-- [x] Minimal HTML (no heavy frameworks)
-
-## Future Enhancements
-
-- User authentication and authorization
-- Task filtering and sorting
-- Task search functionality
-- Task assignment to users
-- Task priority levels
-- Email notifications
-- Task comments/notes
-- File attachments
+- Authentication and authorisation
 - Audit logging
-- Dark mode
-
-## Troubleshooting
-
-### Backend won't start
-- Ensure Java 17 is installed: `java -version`
-- Check port 8080 is not in use: `lsof -i :8080`
-
-### Frontend won't start
-- Ensure Node.js is installed: `node -v`
-- Check port 3000 is not in use: `lsof -i :3000`
-- Verify backend is running on port 8080
-
-### Tests failing
-- Backend: `./gradlew clean test`
-- Frontend: `npm test -- --clearCache && npm test`
-
-## License
-
-MIT
-
-## Author
-
-Created for the HMCTS Developer Technical Test
-
-## Submission
-
-This project demonstrates:
-- Clean code architecture
-- Comprehensive testing
-- Proper error handling
-- API documentation
-- Responsive design
-- Security best practices
-- Production-ready code
-
-Both backend and frontend can be run independently and are ready for GitHub submission.
+- Task filtering and search
+- User assignment
+- Notifications
